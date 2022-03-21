@@ -1,4 +1,4 @@
-package bank;
+package com.example.bank;
 
 /**
  The Profile class is used to create/manipulate/access Profile objects.

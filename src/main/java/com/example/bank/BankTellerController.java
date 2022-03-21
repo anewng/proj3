@@ -1,9 +1,9 @@
-package com.example.proj3;
+package com.example.bank;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class BankTellerController {
     @FXML
     private Label welcomeText;
 

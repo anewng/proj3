@@ -1,4 +1,4 @@
-package bank;
+package com.example.bank;
 
 import java.text.DecimalFormat;
 

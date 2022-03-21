@@ -1,4 +1,4 @@
-package bank;
+package com.example.bank;
 
 /**
  The RunProject2 class runs the project by implementing the run BankTeller method.
