@@ -50,7 +50,7 @@
                                   <DatePicker fx:id="ocDOB" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                       <children>
-                                          <Button fx:id="open" mnemonicParsing="false" text="Open">
+                                          <Button fx:id="open" mnemonicParsing="false" onAction="#onOpenButtonClick" text="Open">
                                               <opaqueInsets>
                                                   <Insets right="10.0" />
                                               </opaqueInsets>
@@ -58,7 +58,7 @@
                                                   <Insets right="10.0" />
                                               </HBox.margin>
                                           </Button>
-                                          <Button fx:id="close" mnemonicParsing="false" text="Close">
+                                          <Button fx:id="close" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Close">
                                               <HBox.margin>
                                                   <Insets left="10.0" />
                                               </HBox.margin></Button>
@@ -144,7 +144,7 @@
                                     <DatePicker fx:id="dwDOB" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                         <children>
-                                            <Button fx:id="deposit" mnemonicParsing="false" text="Deposit">
+                                            <Button fx:id="deposit" mnemonicParsing="false" onAction="#onDepositButtonClick" text="Deposit">
                                                 <opaqueInsets>
                                                     <Insets right="10.0" />
                                                 </opaqueInsets>
@@ -152,7 +152,7 @@
                                                     <Insets right="10.0" />
                                                 </HBox.margin>
                                             </Button>
-                                            <Button fx:id="withdraw" mnemonicParsing="false" text="Withdraw">
+                                            <Button fx:id="withdraw" mnemonicParsing="false" onAction="#onWithdrawButtonClick" text="Withdraw">
                                                 <HBox.margin>
                                                     <Insets left="10.0" />
                                                 </HBox.margin></Button>
