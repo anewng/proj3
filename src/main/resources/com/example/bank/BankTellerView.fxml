@@ -106,17 +106,16 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                            <GridPane layoutY="23.0" prefHeight="349.0" prefWidth="600.0">
+                            <GridPane layoutY="23.0" prefHeight="325.0" prefWidth="600.0">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="155.99999237060547" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.3333257039387" minWidth="10.0" prefWidth="216.66667429606116" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.99999999999994" minWidth="10.0" prefWidth="223.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                     <RowConstraints maxHeight="70.0" minHeight="6.00000262260437" prefHeight="41.666662851969406" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="143.99999737739563" minHeight="10.0" prefHeight="40.333337148030594" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="232.66666285196936" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="238.99999999999997" minHeight="10.0" prefHeight="140.66665140787762" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="238.99999999999997" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="172.99998474121094" minHeight="10.0" prefHeight="46.99999999999997" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="172.99998474121094" minHeight="10.0" prefHeight="48.333333333333314" vgrow="SOMETIMES" />
                                 </rowConstraints>
@@ -159,23 +158,6 @@
                                                 </HBox.margin></Button>
                                         </children>
                                     </HBox>
-                                    <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <children>
-                                            <RadioButton mnemonicParsing="false" text="Newark" GridPane.rowIndex="1" />
-                                            <RadioButton mnemonicParsing="false" text="Camden" GridPane.rowIndex="2" />
-                                            <RadioButton mnemonicParsing="false" text="New Brunswick" />
-                                            <CheckBox mnemonicParsing="false" text="Loyal" GridPane.rowIndex="3" />
-                                        </children>
-                                    </GridPane>
                                     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="96.0" />
