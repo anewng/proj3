@@ -144,7 +144,7 @@
                                     <DatePicker prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                         <children>
-                                            <Button mnemonicParsing="false" text="Open">
+                                            <Button mnemonicParsing="false" text="Deposit">
                                                 <opaqueInsets>
                                                     <Insets right="10.0" />
                                                 </opaqueInsets>
@@ -152,7 +152,7 @@
                                                     <Insets right="10.0" />
                                                 </HBox.margin>
                                             </Button>
-                                            <Button mnemonicParsing="false" text="Close">
+                                            <Button mnemonicParsing="false" text="Withdraw">
                                                 <HBox.margin>
                                                     <Insets left="10.0" />
                                                 </HBox.margin></Button>
@@ -187,14 +187,27 @@
             </Tab>
           <Tab text="Account Database">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane prefHeight="146.0" prefWidth="426.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" text="Print All Accounts" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button mnemonicParsing="false" text="Print All Accounts by Types" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Button mnemonicParsing="false" text="Calculate Interest and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button mnemonicParsing="false" text="Apply Interests and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Demo MenuBar">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
    </top>
