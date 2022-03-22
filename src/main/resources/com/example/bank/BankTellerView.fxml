@@ -41,16 +41,16 @@
                                       <padding>
                                           <Insets left="40.0" />
                                       </padding></Label>
-                                  <TextField GridPane.columnIndex="1" />
+                                  <TextField fx:id="ocFirstName" GridPane.columnIndex="1" />
                                   <Label layoutX="10.0" layoutY="39.0" text="Account Type" GridPane.rowIndex="3">
                                       <padding>
                                           <Insets left="40.0" />
                                       </padding></Label>
-                                  <TextField layoutX="210.0" layoutY="35.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                  <DatePicker prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  <TextField fx:id="ocLastName" layoutX="210.0" layoutY="35.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                  <DatePicker fx:id="ocDOB" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                       <children>
-                                          <Button mnemonicParsing="false" text="Open">
+                                          <Button fx:id="open" mnemonicParsing="false" text="Open">
                                               <opaqueInsets>
                                                   <Insets right="10.0" />
                                               </opaqueInsets>
@@ -58,7 +58,7 @@
                                                   <Insets right="10.0" />
                                               </HBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Close">
+                                          <Button fx:id="close" mnemonicParsing="false" text="Close">
                                               <HBox.margin>
                                                   <Insets left="10.0" />
                                               </HBox.margin></Button>
@@ -75,10 +75,10 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                       <children>
-                                          <RadioButton mnemonicParsing="false" text="Newark" GridPane.rowIndex="1" />
-                                          <RadioButton mnemonicParsing="false" text="Camden" GridPane.rowIndex="2" />
-                                          <RadioButton mnemonicParsing="false" text="New Brunswick" />
-                                          <CheckBox mnemonicParsing="false" text="Loyal" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="newark" mnemonicParsing="false" text="Newark" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="camden" mnemonicParsing="false" text="Camden" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="newBrunswick" mnemonicParsing="false" text="New Brunswick" />
+                                          <CheckBox fx:id="loyal" mnemonicParsing="false" text="Loyal" GridPane.rowIndex="3" />
                                       </children>
                                   </GridPane>
                                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -91,10 +91,10 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                       <children>
-                                          <RadioButton mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
-                                          <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="158.0" text="College Checking" GridPane.columnIndex="1" />
-                                          <RadioButton mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <RadioButton mnemonicParsing="false" text="Checking" />
+                                          <RadioButton fx:id="ocSavings" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="ocCollegeChecking" mnemonicParsing="false" prefHeight="17.0" prefWidth="158.0" text="College Checking" GridPane.columnIndex="1" />
+                                          <RadioButton fx:id="ocMoneyMarket" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="ocChecking" mnemonicParsing="false" text="Checking" />
                                       </children>
                                   </GridPane>
                               </children>
@@ -135,16 +135,16 @@
                                         <padding>
                                             <Insets left="40.0" />
                                         </padding></Label>
-                                    <TextField GridPane.columnIndex="1" />
+                                    <TextField fx:id="dwFirstName" GridPane.columnIndex="1" />
                                     <Label layoutX="10.0" layoutY="39.0" text="Account Type" GridPane.rowIndex="3">
                                         <padding>
                                             <Insets left="40.0" />
                                         </padding></Label>
-                                    <TextField layoutX="210.0" layoutY="35.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <DatePicker prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="dwLastName" layoutX="210.0" layoutY="35.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="dwDOB" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                         <children>
-                                            <Button mnemonicParsing="false" text="Deposit">
+                                            <Button fx:id="deposit" mnemonicParsing="false" text="Deposit">
                                                 <opaqueInsets>
                                                     <Insets right="10.0" />
                                                 </opaqueInsets>
@@ -152,7 +152,7 @@
                                                     <Insets right="10.0" />
                                                 </HBox.margin>
                                             </Button>
-                                            <Button mnemonicParsing="false" text="Withdraw">
+                                            <Button fx:id="withdraw" mnemonicParsing="false" text="Withdraw">
                                                 <HBox.margin>
                                                     <Insets left="10.0" />
                                                 </HBox.margin></Button>
@@ -168,10 +168,10 @@
                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
-                                            <RadioButton mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
-                                            <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="158.0" text="College Checking" GridPane.columnIndex="1" />
-                                            <RadioButton mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                            <RadioButton mnemonicParsing="false" text="Checking" />
+                                            <RadioButton fx:id="dwSavings" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
+                                            <RadioButton fx:id="dwCollegeChecking" mnemonicParsing="false" prefHeight="17.0" prefWidth="158.0" text="College Checking" GridPane.columnIndex="1" />
+                                            <RadioButton fx:id="dwMoneyMarket" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            <RadioButton fx:id="dwChecking" mnemonicParsing="false" text="Checking" />
                                         </children>
                                     </GridPane>
                                     <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="58.0" text="Amount" GridPane.rowIndex="4">
@@ -179,7 +179,7 @@
                                             <Insets left="40.0" />
                                         </padding>
                                     </Label>
-                                    <TextField layoutX="167.0" layoutY="17.0" prefHeight="25.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextField fx:id="amount" layoutX="167.0" layoutY="17.0" prefHeight="25.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                 </children>
                             </GridPane>
                         </children></AnchorPane>
@@ -212,7 +212,7 @@
       </TabPane>
    </top>
    <bottom>
-      <TextArea maxHeight="-Infinity" prefHeight="195.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <TextArea fx:id="messageArea" maxHeight="-Infinity" prefHeight="195.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </bottom>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
