@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bank.BankTellerController">
    <top>
       <TabPane prefHeight="375.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -199,10 +199,10 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" text="Print All Accounts" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Button mnemonicParsing="false" text="Print All Accounts by Types" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <Button mnemonicParsing="false" text="Calculate Interest and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Button mnemonicParsing="false" text="Apply Interests and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                               <Button fx:id="printAllAccounts" mnemonicParsing="false" onAction="#onPrintAllAccountsButtonClick" text="Print All Accounts" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button fx:id="printAllAccountsByTypes" mnemonicParsing="false" onAction="#onPrintAllAccountsByTypeButtonClick" text="Print All Accounts by Types" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Button fx:id="calculateInterestAndFees" mnemonicParsing="false" onAction="#onCalculateInterestsAndFeesButtonClick" text="Calculate Interest and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button fx:id="applyInterestsAndFees" mnemonicParsing="false" onAction="#onApplyInterestsAndFeesButtonClick" text="Apply Interests and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
