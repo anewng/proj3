@@ -199,9 +199,9 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                               <Button fx:id="printAllAccounts" mnemonicParsing="false" onAction="#onPrintAllAccountsButtonClick" text="Print All Accounts" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                               <Button fx:id="printAllAccounts" minWidth="160.0" mnemonicParsing="false" onAction="#onPrintAllAccountsButtonClick" text="Print All Accounts" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                               <Button fx:id="printAllAccountsByTypes" mnemonicParsing="false" onAction="#onPrintAllAccountsByTypeButtonClick" text="Print All Accounts by Types" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <Button fx:id="calculateInterestAndFees" mnemonicParsing="false" onAction="#onCalculateInterestsAndFeesButtonClick" text="Calculate Interest and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button fx:id="calculateInterestAndFees" minWidth="160.0" mnemonicParsing="false" onAction="#onCalculateInterestsAndFeesButtonClick" text="Calculate Interest and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                               <Button fx:id="applyInterestsAndFees" mnemonicParsing="false" onAction="#onApplyInterestsAndFeesButtonClick" text="Apply Interests and Fees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>

@@ -33,7 +33,6 @@ public class BankTellerController {
 
     @FXML
     protected void onPrintAllAccountsButtonClick(ActionEvent event) {
-
         bankDatabase.print();
     }
 
