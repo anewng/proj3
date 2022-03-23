@@ -87,9 +87,6 @@ public class BankTellerController {
             messageArea.appendText("Date of birth invalid.\n");
         } else if (newAccount.balance <= 0) {
             messageArea.appendText("Initial deposit cannot be 0 or negative.\n");
-        } else if (newAccount.getType().equals("College Checking")
-                && !(campusCode == 0 || campusCode == 1 || campusCode == 2)) {
-            messageArea.appendText("Invalid campus code.\n");
         } else if (newAccount.getType().equals("Checking") && bankDatabase.findCCProfile(newAccount)) {
             messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
         } else if (newAccount.getType().equals("College Checking") && bankDatabase.findCProfile(newAccount)) {
