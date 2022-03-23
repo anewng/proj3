@@ -270,7 +270,7 @@ public class BankTellerController {
         } else {
             messageArea.appendText("\n*list of accounts in the database*\n");
             messageArea.appendText(bankDatabase.print());
-            messageArea.appendText("*end of list*\n");
+            messageArea.appendText("*end of list*\n\n");
         }
     }
 
@@ -284,7 +284,7 @@ public class BankTellerController {
         } else {
             messageArea.appendText("\n*list of accounts by account type.\n");
             messageArea.appendText(bankDatabase.printByAccountType());
-            messageArea.appendText("*end of list.\n");
+            messageArea.appendText("*end of list.\n\n");
         }
     }
 
@@ -298,7 +298,7 @@ public class BankTellerController {
         } else {
             messageArea.appendText("\n*list of accounts with fee and monthly interest");
             messageArea.appendText(bankDatabase.printFeeAndInterest());
-            messageArea.appendText("*end of list.\n");
+            messageArea.appendText("*end of list.\n\n");
         }
     }
 
@@ -313,7 +313,7 @@ public class BankTellerController {
         } else {
             messageArea.appendText("\n*list of accounts with updated balance");
             messageArea.appendText(bankDatabase.print());
-            messageArea.appendText("*end of list.\n");
+            messageArea.appendText("*end of list.\n\n");
         }
     }
 
