@@ -147,7 +147,7 @@ public class BankTeller {
             last = result[LAST_NAME_INDEX];
             dob = result[DOB_INDEX];
         } catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Missing data for opening an account.");
+            System.out.println("Missing data for closing an account.");
             return;
         }
 
@@ -173,6 +173,8 @@ public class BankTeller {
             bankDatabase.close(closeAcc);
             System.out.println("Account closed.");
         }
+
+
     }
 
     /**

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bank.BankTellerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bank.BankTellerController">
    <top>
       <TabPane prefHeight="375.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -75,13 +75,13 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                       <children>
-                                          <RadioButton fx:id="newark" mnemonicParsing="false" text="Newark" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="newark" disable="true" mnemonicParsing="false" text="Newark" GridPane.rowIndex="1">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="campusType" />
                                        </toggleGroup></RadioButton>
-                                          <RadioButton fx:id="camden" mnemonicParsing="false" text="Camden" toggleGroup="$campusType" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="newBrunswick" mnemonicParsing="false" text="New Brunswick" toggleGroup="$campusType" />
-                                          <CheckBox fx:id="loyal" mnemonicParsing="false" text="Loyal" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="camden" disable="true" mnemonicParsing="false" text="Camden" toggleGroup="$campusType" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="newBrunswick" disable="true" mnemonicParsing="false" text="New Brunswick" toggleGroup="$campusType" />
+                                          <CheckBox fx:id="loyal" disable="true" mnemonicParsing="false" text="Loyal" GridPane.rowIndex="3" />
                                       </children>
                                   </GridPane>
                                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -94,17 +94,17 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                       <children>
-                                          <RadioButton fx:id="ocSavings" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="ocSavings" mnemonicParsing="false" onAction="#onSavingsButtonClick" text="Savings" GridPane.rowIndex="1">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="acctType" />
                                        </toggleGroup></RadioButton>
-                                          <RadioButton fx:id="ocCollegeChecking" mnemonicParsing="false" prefHeight="17.0" prefWidth="158.0" text="College Checking" toggleGroup="$acctType" GridPane.columnIndex="1" />
-                                          <RadioButton fx:id="ocMoneyMarket" mnemonicParsing="false" text="Money Market" toggleGroup="$acctType" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="ocChecking" mnemonicParsing="false" text="Checking" toggleGroup="$acctType" />
+                                          <RadioButton fx:id="ocCollegeChecking" mnemonicParsing="false" onAction="#onCollegeCheckingButtonClick" prefHeight="17.0" prefWidth="158.0" text="College Checking" toggleGroup="$acctType" GridPane.columnIndex="1" />
+                                          <RadioButton fx:id="ocMoneyMarket" mnemonicParsing="false" onAction="#onMoneyMarketButtonClick" text="Money Market" toggleGroup="$acctType" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="ocChecking" mnemonicParsing="false" onAction="#onCheckingButtonClick" text="Checking" toggleGroup="$acctType" />
                                       </children>
                                   </GridPane>
                               <TextField fx:id="ocDOB" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="ocAamount" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="ocAmount" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label text="Amount" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="40.0" />

@@ -2,10 +2,7 @@ package com.example.bank;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.stage.WindowEvent;
-
 
 public class BankTellerController {
     private static final int NEW_BRUNSWICK = 0;
@@ -16,13 +13,15 @@ public class BankTellerController {
     private static final int CODES_NOT_APPLICABLE = -2;
     private static final int CODES_APPLICABLE_AND_ERROR = -1;
 
-
     @FXML
     private Button open, close, deposit, withdraw, printAllAccounts, printAllAccountsByType, calculateInterestAndFees,
             applyInterestsAndFees;
 
     @FXML
-    private TextField ocFirstName, ocLastName, ocAmount, dwFirstName, dwLastName, dwAmount, ocDOB, wdDOB;
+    private RadioButton newBrunswick, newark, camden;
+
+    @FXML
+    private TextField ocFirstName, ocLastName, ocAmount, dwFirstName, dwLastName, dwAmount, ocDOB, dwDOB;
 
     @FXML
     private ToggleGroup acctType, acctTypeDW, campusType;
@@ -38,23 +37,6 @@ public class BankTellerController {
     }*/
 
     AccountDatabase bankDatabase = new AccountDatabase();
-
-    @FXML
-    protected void onPrintAllAccountsButtonClick(ActionEvent event) {
-        bankDatabase.print();
-    }
-
-    @FXML
-    protected void onPrintAllAccountsByTypeButtonClick(ActionEvent event) {
-        bankDatabase.printByAccountType(); }
-
-    @FXML
-    protected void onCalculateInterestsAndFeesButtonClick(ActionEvent event) {
-        bankDatabase.updateBalance(); }
-
-    @FXML
-    protected void onApplyInterestsAndFeesButtonClick(ActionEvent event) {
-        bankDatabase.printFeeAndInterest(); }
 
     /**
      Opens an account by adding it to the database.
@@ -84,7 +66,7 @@ public class BankTellerController {
         try {
             balanceDouble = Double.parseDouble(ocAmount.getText());
         } catch (RuntimeException e){
-            messageArea.appendText("Not a valid amount.\n");
+            messageArea.appendText(" Not a valid amount.\n");
             return;
         }
 
@@ -103,28 +85,30 @@ public class BankTellerController {
      @param bankDatabase the database containing the accounts.
      @return true if there is an error, else return false.
      */
-    public boolean openReturnErrorStatements(Account newAccount, AccountDatabase bankDatabase){
+    public boolean openReturnErrorStatements(Account newAccount, AccountDatabase bankDatabase) {
         int campusCode = -1;
-        if (newAccount.getType().equals("College Checking")){
+        if (newAccount.getType().equals("College Checking")) {
             campusCode = ((CollegeChecking) newAccount).collegeCode;
         }
-        if (!newAccount.holder.getDob().isValid()){
-            messageArea.appendText("Date of birth invalid.");
-        } else if (newAccount.balance <= 0){
-            messageArea.appendText("Initial deposit cannot be 0 or negative.");
+        if (!newAccount.holder.getDob().isValid()) {
+            messageArea.appendText("Date of birth invalid.\n");
+        } else if (newAccount.balance <= 0) {
+            messageArea.appendText("Initial deposit cannot be 0 or negative.\n");
         } else if (newAccount.getType().equals("College Checking")
-                && !( campusCode == 0 || campusCode == 1 || campusCode == 2) ){
-            messageArea.appendText("Invalid campus code.");
-        } else if (newAccount.getType().equals("Checking") && bankDatabase.findCCProfile(newAccount)){
-            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.");
-        } else if (newAccount.getType().equals("College Checking") && bankDatabase.findCProfile(newAccount)){
-            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.");
-        } else if (bankDatabase.isInDatabase(newAccount)){
-            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.");
-        } else if (newAccount.getType().equals("Money Market") && newAccount.balance < 2500){
-            messageArea.appendText("Minimum of $2500 to open a MoneyMarket account.");
+                && !(campusCode == 0 || campusCode == 1 || campusCode == 2)) {
+            messageArea.appendText("Invalid campus code.\n");
+        } else if (newAccount.getType().equals("Checking") && bankDatabase.findCCProfile(newAccount)) {
+            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
+        } else if (newAccount.getType().equals("College Checking") && bankDatabase.findCProfile(newAccount)) {
+            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
+        } else if (bankDatabase.isInDatabase(newAccount)) {
+            messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
+        } else if (newAccount.getType().equals("Money Market") && newAccount.balance < 2500) {
+            messageArea.appendText("Minimum of $2500 to open a MoneyMarket account.\n");
+        } else {
+            return false;
         }
-        return false;
+        return true;
     }
 
     protected int setCodes(String accountType){
@@ -132,7 +116,7 @@ public class BankTellerController {
             return CODES_NOT_APPLICABLE;
         }
 
-        if(campusType.getSelectedToggle() == null){
+        if(accountType.equals("College Checking") && campusType.getSelectedToggle() == null){
             messageArea.appendText("Missing data for opening an account.\n");
             return CODES_APPLICABLE_AND_ERROR;
         }
@@ -158,29 +142,126 @@ public class BankTellerController {
 
     @FXML
     protected void onCloseButtonClick(ActionEvent event) {
+        String first = ocFirstName.getText(), last = ocLastName.getText(), dob = ocDOB.getText();
 
+        if(ocFirstName.getText().isBlank() || ocLastName.getText().isBlank() || ocDOB.getText().isBlank()){
+            messageArea.appendText("Missing data for closing an account.\n");
+            return;
+        }
+        if(acctType.getSelectedToggle() == null){
+            messageArea.appendText("Missing data for closing an account.\n");
+            return;
+        }
+
+        RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
+        String accountType = selectedRadioButton.getText();
+
+        int codes = -10;
+        codes = setCodes(accountType);
+        if(codes == CODES_APPLICABLE_AND_ERROR) return;
+
+        double balanceDouble = 0; //should we be returning error if amount has a value?? or not caring
+
+        Date birth = new Date(dob);
+        Profile newProfile = new Profile(first, last, birth);
+        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+
+        Account closeAcc = bankDatabase.findByProfileType(newAccount);
+        if (closeAcc.closed) {
+            messageArea.appendText("Account closed already.\n");
+        } else {
+            bankDatabase.close(closeAcc);
+            messageArea.appendText("Account closed.\n");
+        }
     }
 
     @FXML
     protected void onDepositButtonClick(ActionEvent event) {
+        String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
 
+        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()){
+            messageArea.appendText("Missing account data.\n"); //I just made this up lol should we be checking for this bc we weren't before
+            return;
+        }
+        if(acctTypeDW.getSelectedToggle() == null){
+            messageArea.appendText("Missing account type.\n"); //same thing here
+            return;
+        }
+
+        RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
+        String accountType = selectedRadioButton.getText();
+
+        int codes = -10;
+
+        double balanceDouble = 0;
+        try {
+            balanceDouble = Double.parseDouble(dwAmount.getText());
+        } catch (RuntimeException e){
+            messageArea.appendText(" Not a valid amount.\n");
+            return;
+        }
+
+        if (balanceDouble <= 0){
+            messageArea.appendText("Deposit - amount cannot be 0 or negative.\n");
+            return;
+        }
+
+        Date birth = new Date(dob);
+        Profile newProfile = new Profile(first, last, birth);
+
+        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        depositBalanceLastStep(bankDatabase, newAccount);
     }
 
     @FXML
     protected void onWithdrawButtonClick(ActionEvent event) {
+        String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
 
+        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()){
+            messageArea.appendText("Missing account data.\n"); //I just made this up lol should we be checking for this bc we weren't before
+            return;
+        }
+        if(acctTypeDW.getSelectedToggle() == null){
+            messageArea.appendText("Missing account type.\n"); //same thing here
+            return;
+        }
+
+        RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
+        String accountType = selectedRadioButton.getText();
+
+        int codes = -10;
+
+        double balanceDouble = 0;
+        try {
+            balanceDouble = Double.parseDouble(dwAmount.getText());
+        } catch (RuntimeException e){
+            messageArea.appendText(" Not a valid amount.\n");
+            return;
+        }
+
+        if (balanceDouble <= 0){
+            messageArea.appendText("Withdraw - amount cannot be 0 or negative.\n");
+            return;
+        }
+
+        Date birth = new Date(dob);
+        Profile newProfile = new Profile(first, last, birth);
+
+        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        withdrawBalanceLastStep(bankDatabase, newAccount);
     }
 
 
     /**
      Prints the accounts in the database in their current order.
-     @param bankDatabase the database from which accounts are being printed.
+     @param
      */
-    public void printAccounts (AccountDatabase bankDatabase){
+    @FXML
+    protected void onPrintAllAccountsButtonClick(ActionEvent event) {
         if (bankDatabase.getNumAcct() == 0){
-            messageArea.appendText("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!\n");
         } else {
-            messageArea.appendText("\n*list of accounts in the database*");
+            messageArea.appendText("\n*list of accounts in the database*\n");
             messageArea.appendText(bankDatabase.print());
             messageArea.appendText("*end of list*\n");
         }
@@ -188,13 +269,13 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database by order of type.
-     @param bankDatabase the database from which accounts are being printed.
      */
-    public void printAccountsByType(AccountDatabase bankDatabase){
+    @FXML
+    protected void onPrintAllAccountsByTypeButtonClick(ActionEvent event) {
         if (bankDatabase.getNumAcct() == 0){
-            messageArea.appendText("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!\n");
         } else {
-            messageArea.appendText("\n*list of accounts by account type.");
+            messageArea.appendText("\n*list of accounts by account type.\n");
             messageArea.appendText(bankDatabase.printByAccountType());
             messageArea.appendText("*end of list.\n");
         }
@@ -202,11 +283,11 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database in their current order with their calculated fees/interests.
-     @param bankDatabase the database from which accounts are being printed.
      */
-    public void printAccountsByFeesInterest(AccountDatabase bankDatabase) {
+    @FXML
+    protected void onCalculateInterestsAndFeesButtonClick(ActionEvent event) {
         if (bankDatabase.getNumAcct() == 0){
-            messageArea.appendText("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts with fee and monthly interest");
             messageArea.appendText(bankDatabase.printFeeAndInterest());
@@ -216,12 +297,12 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database in their current order with updated balances based on fees/interests.
-     @param bankDatabase the database from which accounts are being updated/printed.
      */
-    public void updateAndPrint(AccountDatabase bankDatabase){
+    @FXML
+    protected void onApplyInterestsAndFeesButtonClick(ActionEvent event) {
         bankDatabase.updateBalance();
         if (bankDatabase.getNumAcct() == 0){
-            messageArea.appendText("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts with updated balance");
             messageArea.appendText(bankDatabase.print());
@@ -263,10 +344,10 @@ public class BankTellerController {
         int index = bankDatabase.findClosedAccount(newAccount);
         if (index == -1){
             bankDatabase.open(newAccount);
-            messageArea.appendText("Account opened.");
+            messageArea.appendText("Account opened.\n");
         } else {
             bankDatabase.reopen(newAccount, index);
-            messageArea.appendText("Account reopened.");
+            messageArea.appendText("Account reopened.\n");
         }
     }
 
@@ -276,15 +357,15 @@ public class BankTellerController {
      @param bankDatabase the database holding the account to which a deposit is being made.
      @param newAccount the account being deposited to.
      */
-    public void depositBalanceLastStep(Account newAccount, AccountDatabase bankDatabase){
+    public void depositBalanceLastStep(AccountDatabase bankDatabase, Account newAccount){
         Account depositAccount = bankDatabase.findByProfileType(newAccount);
         if (depositAccount == null){
             messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
-                    + " is not in the database.");
+                    + " is not in the database.\n");
         } else {
             depositAccount.deposit(newAccount.balance);
             bankDatabase.deposit(depositAccount);
-            messageArea.appendText("Deposit - balance updated.");
+            messageArea.appendText("Deposit - balance updated.\n");
         }
     }
 
@@ -298,15 +379,47 @@ public class BankTellerController {
         Account withdrawAccount = bankDatabase.findByProfileType(newAccount);
         if(withdrawAccount == null){
             messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
-                    + " is not in the database.");
+                    + " is not in the database.\n");
         } else {
             if (newAccount.balance > withdrawAccount.balance){
-                messageArea.appendText("Withdraw - insufficient fund.");
+                messageArea.appendText("Withdraw - insufficient fund.\n");
             } else {
                 withdrawAccount.withdraw(newAccount.balance);
                 bankDatabase.withdraw(withdrawAccount);
-                messageArea.appendText("Withdraw - balance updated.");
+                messageArea.appendText("Withdraw - balance updated.\n");
             }
         }
+    }
+
+    @FXML
+    protected void onCollegeCheckingButtonClick(ActionEvent event) {
+        newBrunswick.setDisable(false);
+        newark.setDisable(false);
+        camden.setDisable(false);
+        loyal.setDisable(true);
+    }
+
+    @FXML
+    protected void onCheckingButtonClick(ActionEvent event) {
+        newBrunswick.setDisable(true);
+        newark.setDisable(true);
+        camden.setDisable(true);
+        loyal.setDisable(true);
+    }
+
+    @FXML
+    protected void onMoneyMarketButtonClick(ActionEvent event) {
+        newBrunswick.setDisable(true);
+        newark.setDisable(true);
+        camden.setDisable(true);
+        loyal.setDisable(false);
+    }
+
+    @FXML
+    protected void onSavingsButtonClick(ActionEvent event) {
+        newBrunswick.setDisable(true);
+        newark.setDisable(true);
+        camden.setDisable(true);
+        loyal.setDisable(false);
     }
 }
