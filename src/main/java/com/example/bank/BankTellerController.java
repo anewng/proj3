@@ -2,6 +2,7 @@ package com.example.bank;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.WindowEvent;
 
@@ -10,9 +11,15 @@ public class BankTellerController {
     private static final int NEW_BRUNSWICK = 0;
     private static final int NEWARK = 1;
     private static final int CAMDEN = 2;
+    private static final int UNLOYAL = 0;
+    private static final int LOYAL = 1;
+    private static final int CODES_NOT_APPLICABLE = -2;
+    private static final int CODES_APPLICABLE_AND_ERROR = -1;
+
 
     @FXML
-    private Button open, close, deposit, withdraw, printAllAccounts, printAllAccountsByType, calculateInterestAndFees, applyInterestsAndFees;
+    private Button open, close, deposit, withdraw, printAllAccounts, printAllAccountsByType, calculateInterestAndFees,
+            applyInterestsAndFees;
 
     @FXML
     private TextField ocFirstName, ocLastName, ocAmount, dwFirstName, dwLastName, dwAmount, ocDOB, wdDOB;
@@ -68,22 +75,10 @@ public class BankTellerController {
 
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
-        int codes = -1;
-        if(accountType.equals("Savings") || accountType.equals("College Checking")){
-            if(campusType.getSelectedToggle() == null){
-                messageArea.appendText("Missing data for opening an account.\n");
-                return;
-            }
-            selectedRadioButton = (RadioButton) campusType.getSelectedToggle();
-            String codeString = selectedRadioButton.getText();
-            if(codeString.equals("New Brunswick")){
-                codes = NEW_BRUNSWICK;
-            }else if(codeString.equals("Newark")){
-                codes = NEWARK;
-            }else if(codeString.equals("Camden")){
-                codes = CAMDEN;
-            }
-        }
+
+        int codes = -10;
+        codes = setCodes(accountType);
+        if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
         double balanceDouble = 0;
         try {
@@ -132,9 +127,35 @@ public class BankTellerController {
         return false;
     }
 
-    protected void disableLoyal(){
+    protected int setCodes(String accountType){
+        if(!accountType.equals("College Checking") && !accountType.equals("Savings")){
+            return CODES_NOT_APPLICABLE;
+        }
 
+        if(campusType.getSelectedToggle() == null){
+            messageArea.appendText("Missing data for opening an account.\n");
+            return CODES_APPLICABLE_AND_ERROR;
+        }
+
+        if(accountType.equals("College Checking")){
+            RadioButton selectedRadioButton = (RadioButton) campusType.getSelectedToggle();
+            String codeString = selectedRadioButton.getText();
+            if(codeString.equals("New Brunswick")){
+                return NEW_BRUNSWICK;
+            }else if(codeString.equals("Newark")){
+                return NEWARK;
+            }else if(codeString.equals("Camden")){
+                return CAMDEN;
+            }
+        }else if(accountType.equals("Savings")){
+            if(loyal.isSelected()){
+                return LOYAL;
+            }
+            return UNLOYAL;
+        }
+        return -10;
     }
+
 
     @FXML
     protected void onCloseButtonClick(ActionEvent event) {
