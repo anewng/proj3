@@ -47,7 +47,7 @@ public class Date implements Comparable<Date> {
      */
     public Date() {
         Calendar date = Calendar.getInstance();
-        month = date.get(Calendar.MONTH);
+        month = date.get(Calendar.MONTH) + 1;
         day = date.get(Calendar.DAY_OF_MONTH);
         year = date.get(Calendar.YEAR);
     }
@@ -128,4 +128,5 @@ public class Date implements Comparable<Date> {
     public String toString() {
         return +this.month + "/" + this.day + "/" + this.year;
     }
+
 }

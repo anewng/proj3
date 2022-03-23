@@ -14,10 +14,6 @@ public class BankTellerController {
     private static final int CODES_APPLICABLE_AND_ERROR = -1;
 
     @FXML
-    private Button open, close, deposit, withdraw, printAllAccounts, printAllAccountsByType, calculateInterestAndFees,
-            applyInterestsAndFees;
-
-    @FXML
     private RadioButton newBrunswick, newark, camden;
 
     @FXML
@@ -32,10 +28,6 @@ public class BankTellerController {
     @FXML
     private TextArea messageArea;
 
-    /*protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }*/
-
     AccountDatabase bankDatabase = new AccountDatabase();
 
     /**
@@ -46,7 +38,8 @@ public class BankTellerController {
     protected void onOpenButtonClick(ActionEvent event) {
         String first = ocFirstName.getText(), last = ocLastName.getText(), dob = ocDOB.getText();
 
-        if(ocFirstName.getText().isBlank() || ocLastName.getText().isBlank() || ocDOB.getText().isBlank()){
+        if(ocFirstName.getText().isBlank() || ocLastName.getText().isBlank() || ocDOB.getText().isBlank()
+                || ocAmount.getText().isBlank()){
             messageArea.appendText("Missing data for opening an account.\n");
             return;
         }
@@ -90,7 +83,7 @@ public class BankTellerController {
         if (newAccount.getType().equals("College Checking")) {
             campusCode = ((CollegeChecking) newAccount).collegeCode;
         }
-        if (!newAccount.holder.getDob().isValid()) {
+        if (!newAccount.holder.getDob().isValid() || newAccount.holder.getDob().isFutureDate() ) {
             messageArea.appendText("Date of birth invalid.\n");
         } else if (newAccount.balance <= 0) {
             messageArea.appendText("Initial deposit cannot be 0 or negative.\n");
@@ -140,6 +133,10 @@ public class BankTellerController {
         return -10;
     }
 
+    /**
+     Closes an account in the database.
+     @param event the method is executed when the user clicks the Close button on the GUI.
+     */
     @FXML
     protected void onCloseButtonClick(ActionEvent event) {
         String first = ocFirstName.getText(), last = ocLastName.getText(), dob = ocDOB.getText();
@@ -160,7 +157,7 @@ public class BankTellerController {
         codes = setCodes(accountType);
         if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
-        double balanceDouble = 0; //should we be returning error if amount has a value?? or not caring
+        double balanceDouble = 0; //should we be returning error if amount has a value?? or not caring - we shouldnt care bc i think we close it regardless of the balance entered
 
         Date birth = new Date(dob);
         Profile newProfile = new Profile(first, last, birth);
@@ -175,16 +172,21 @@ public class BankTellerController {
         }
     }
 
+    /**
+     Deposits money into an account.
+     @param event the method is executed when the user clicks the Deposit button on the GUI.
+     */
     @FXML
     protected void onDepositButtonClick(ActionEvent event) {
         String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
 
-        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()){
-            messageArea.appendText("Missing account data.\n"); //I just made this up lol should we be checking for this bc we weren't before
+        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()
+                || ocDOB.getText().isBlank()){
+            messageArea.appendText("Missing account data.\n");
             return;
         }
         if(acctTypeDW.getSelectedToggle() == null){
-            messageArea.appendText("Missing account type.\n"); //same thing here
+            messageArea.appendText("Missing account type.\n");
             return;
         }
 
@@ -213,16 +215,21 @@ public class BankTellerController {
         depositBalanceLastStep(bankDatabase, newAccount);
     }
 
+    /**
+     Withdraws money from an account.
+     @param event the method is executed when the user clicks the Withdraw button on the GUI.
+     */
     @FXML
     protected void onWithdrawButtonClick(ActionEvent event) {
         String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
 
-        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()){
-            messageArea.appendText("Missing account data.\n"); //I just made this up lol should we be checking for this bc we weren't before
+        if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()
+                || dwAmount.getText().isBlank()){
+            messageArea.appendText("Missing account data.\n");
             return;
         }
         if(acctTypeDW.getSelectedToggle() == null){
-            messageArea.appendText("Missing account type.\n"); //same thing here
+            messageArea.appendText("Missing account type.\n");
             return;
         }
 
