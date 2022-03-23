@@ -59,7 +59,7 @@ public class BankTellerController {
         try {
             balanceDouble = Double.parseDouble(ocAmount.getText());
         } catch (RuntimeException e){
-            messageArea.appendText(" Not a valid amount.\n");
+            messageArea.appendText("Not a valid amount.\n");
             return;
         }
 
@@ -157,7 +157,7 @@ public class BankTellerController {
         codes = setCodes(accountType);
         if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
-        double balanceDouble = 0; //should we be returning error if amount has a value?? or not caring - we shouldnt care bc i think we close it regardless of the balance entered
+        double balanceDouble = 0;
 
         Date birth = new Date(dob);
         Profile newProfile = new Profile(first, last, birth);
@@ -404,6 +404,7 @@ public class BankTellerController {
         newark.setDisable(false);
         camden.setDisable(false);
         loyal.setDisable(true);
+        loyal.setSelected(false);
     }
 
     @FXML
@@ -412,6 +413,10 @@ public class BankTellerController {
         newark.setDisable(true);
         camden.setDisable(true);
         loyal.setDisable(true);
+        newBrunswick.setSelected(false);
+        newark.setSelected(false);
+        camden.setSelected(false);
+        loyal.setSelected(false);
     }
 
     @FXML
@@ -420,6 +425,9 @@ public class BankTellerController {
         newark.setDisable(true);
         camden.setDisable(true);
         loyal.setDisable(false);
+        newBrunswick.setSelected(false);
+        newark.setSelected(false);
+        camden.setSelected(false);
     }
 
     @FXML
@@ -428,5 +436,8 @@ public class BankTellerController {
         newark.setDisable(true);
         camden.setDisable(true);
         loyal.setDisable(false);
+        newBrunswick.setSelected(false);
+        newark.setSelected(false);
+        camden.setSelected(false);
     }
 }
