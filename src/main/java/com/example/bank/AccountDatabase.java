@@ -262,7 +262,7 @@ public class AccountDatabase {
         for (int i = 0; i < numAcct; i++) {
             DecimalFormat d = new DecimalFormat("'$'0.00");
             printed += accounts[i].toString() + "::fee " + d.format(accounts[i].fee())
-                    + "::monthly interest " + d.format(accounts[i].monthlyInterest());
+                    + "::monthly interest " + d.format(accounts[i].monthlyInterest()) + "\n";
         }
         return printed;
     }
