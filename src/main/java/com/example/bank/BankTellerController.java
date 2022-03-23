@@ -84,7 +84,7 @@ public class BankTellerController {
         try {
             balanceDouble = Double.parseDouble(ocAmount.getText());
         } catch (RuntimeException e){
-            messageArea.appendText("Not a valid amount.");
+            messageArea.appendText("Not a valid amount.\n");
             return;
         }
 
@@ -156,7 +156,6 @@ public class BankTellerController {
         return -10;
     }
 
-
     @FXML
     protected void onCloseButtonClick(ActionEvent event) {
 
@@ -179,11 +178,11 @@ public class BankTellerController {
      */
     public void printAccounts (AccountDatabase bankDatabase){
         if (bankDatabase.getNumAcct() == 0){
-            System.out.println("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!");
         } else {
-            System.out.println("\n*list of accounts in the database*");
-            bankDatabase.print();
-            System.out.println("*end of list*\n");
+            messageArea.appendText("\n*list of accounts in the database*");
+            messageArea.appendText(bankDatabase.print());
+            messageArea.appendText("*end of list*\n");
         }
     }
 
@@ -193,11 +192,11 @@ public class BankTellerController {
      */
     public void printAccountsByType(AccountDatabase bankDatabase){
         if (bankDatabase.getNumAcct() == 0){
-            System.out.println("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!");
         } else {
-            System.out.println("\n*list of accounts by account type.");
-            bankDatabase.printByAccountType();
-            System.out.println("*end of list.\n");
+            messageArea.appendText("\n*list of accounts by account type.");
+            messageArea.appendText(bankDatabase.printByAccountType());
+            messageArea.appendText("*end of list.\n");
         }
     }
 
@@ -207,11 +206,11 @@ public class BankTellerController {
      */
     public void printAccountsByFeesInterest(AccountDatabase bankDatabase) {
         if (bankDatabase.getNumAcct() == 0){
-            System.out.println("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!");
         } else {
-            System.out.println("\n*list of accounts with fee and monthly interest");
-            bankDatabase.printFeeAndInterest();
-            System.out.println("*end of list.\n");
+            messageArea.appendText("\n*list of accounts with fee and monthly interest");
+            messageArea.appendText(bankDatabase.printFeeAndInterest());
+            messageArea.appendText("*end of list.\n");
         }
     }
 
@@ -222,11 +221,11 @@ public class BankTellerController {
     public void updateAndPrint(AccountDatabase bankDatabase){
         bankDatabase.updateBalance();
         if (bankDatabase.getNumAcct() == 0){
-            System.out.println("Account Database is empty!");
+            messageArea.appendText("Account Database is empty!");
         } else {
-            System.out.println("\n*list of accounts with updated balance");
-            bankDatabase.print();
-            System.out.println("*end of list.\n");
+            messageArea.appendText("\n*list of accounts with updated balance");
+            messageArea.appendText(bankDatabase.print());
+            messageArea.appendText("*end of list.\n");
         }
     }
 
@@ -264,10 +263,10 @@ public class BankTellerController {
         int index = bankDatabase.findClosedAccount(newAccount);
         if (index == -1){
             bankDatabase.open(newAccount);
-            System.out.println("Account opened.");
+            messageArea.appendText("Account opened.");
         } else {
             bankDatabase.reopen(newAccount, index);
-            System.out.println("Account reopened.");
+            messageArea.appendText("Account reopened.");
         }
     }
 
@@ -280,12 +279,12 @@ public class BankTellerController {
     public void depositBalanceLastStep(Account newAccount, AccountDatabase bankDatabase){
         Account depositAccount = bankDatabase.findByProfileType(newAccount);
         if (depositAccount == null){
-            System.out.println(newAccount.holder.toString() + " " + newAccount.getType()
+            messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
                     + " is not in the database.");
         } else {
             depositAccount.deposit(newAccount.balance);
             bankDatabase.deposit(depositAccount);
-            System.out.println("Deposit - balance updated.");
+            messageArea.appendText("Deposit - balance updated.");
         }
     }
 
@@ -298,15 +297,15 @@ public class BankTellerController {
     public void withdrawBalanceLastStep(AccountDatabase bankDatabase, Account newAccount){
         Account withdrawAccount = bankDatabase.findByProfileType(newAccount);
         if(withdrawAccount == null){
-            System.out.println(newAccount.holder.toString() + " " + newAccount.getType()
+            messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
                     + " is not in the database.");
         } else {
             if (newAccount.balance > withdrawAccount.balance){
-                System.out.println("Withdraw - insufficient fund.");
+                messageArea.appendText("Withdraw - insufficient fund.");
             } else {
                 withdrawAccount.withdraw(newAccount.balance);
                 bankDatabase.withdraw(withdrawAccount);
-                System.out.println("Withdraw - balance updated.");
+                messageArea.appendText("Withdraw - balance updated.");
             }
         }
     }

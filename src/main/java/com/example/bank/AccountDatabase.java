@@ -230,16 +230,18 @@ public class AccountDatabase {
     /**
      Prints the accounts from the datqbase in their current order.
      */
-    public void print() {
+    public String print() {
+        String printed = "";
         for (int i = 0; i < numAcct; i++) {
-            System.out.println(accounts[i].toString());
+            printed += accounts[i].toString() + "\n";
         }
+        return printed;
     }
 
     /**
      Prints the accounts from the datqbase in order of account type.
      */
-    public void printByAccountType() {
+    public String printByAccountType() {
         for (int i = 1; i < numAcct; ++i) {
             Account key = accounts[i];
             int j = i - 1;
@@ -249,18 +251,20 @@ public class AccountDatabase {
             }
             accounts[j + 1] = key;
         }
-        print();
+        return print();
     }
 
     /**
      Prints the accounts from the datqbase in their current order with respective fees/interest.
      */
-    public void printFeeAndInterest() {
+    public String printFeeAndInterest() {
+        String printed = "";
         for (int i = 0; i < numAcct; i++) {
             DecimalFormat d = new DecimalFormat("'$'0.00");
-            System.out.println(accounts[i].toString() + "::fee " + d.format(accounts[i].fee())
-                    + "::monthly interest " + d.format(accounts[i].monthlyInterest()));
+            printed += accounts[i].toString() + "::fee " + d.format(accounts[i].fee())
+                    + "::monthly interest " + d.format(accounts[i].monthlyInterest());
         }
+        return printed;
     }
 
     /**
