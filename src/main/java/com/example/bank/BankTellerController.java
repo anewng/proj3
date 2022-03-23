@@ -154,8 +154,8 @@ public class BankTellerController {
         String accountType = selectedRadioButton.getText();
 
         int codes = -10;
-        codes = setCodes(accountType);
-        if(codes == CODES_APPLICABLE_AND_ERROR) return;
+        //codes = setCodes(accountType);
+        //if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
         double balanceDouble = 0;
 
