@@ -191,6 +191,9 @@ public class AccountDatabase {
         if (accounts[index] instanceof Savings) {
             ((Savings) accounts[index]).loyal = 0;
         }
+        if (accounts[index] instanceof MoneyMarket) {
+            ((MoneyMarket) accounts[index]).withdrawalCount = 0;
+        }
         return true;
     }
 

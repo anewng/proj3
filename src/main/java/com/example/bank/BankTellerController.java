@@ -196,7 +196,7 @@ public class BankTellerController {
         try {
             balanceDouble = Double.parseDouble(dwAmount.getText());
         } catch (RuntimeException e){
-            messageArea.appendText(" Not a valid amount.\n");
+            messageArea.appendText("Not a valid amount.\n");
             return;
         }
 
@@ -239,7 +239,7 @@ public class BankTellerController {
         try {
             balanceDouble = Double.parseDouble(dwAmount.getText());
         } catch (RuntimeException e){
-            messageArea.appendText(" Not a valid amount.\n");
+            messageArea.appendText("Not a valid amount.\n");
             return;
         }
 
