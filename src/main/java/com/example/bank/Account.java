@@ -16,6 +16,7 @@ public abstract class Account {
 
     protected static final int WAIVED_FEE = 0;
     private static final int FIRST_TWO_LETTERS = 2;
+    private static final int MINIMUM_MM_AMOUNT = 2500;
 
     /**
      Constructor creates an Account object.
@@ -96,7 +97,7 @@ public abstract class Account {
      */
     public void withdraw(double amount) {
         this.balance -= amount;
-        if (this instanceof MoneyMarket && this.balance < 2500) {
+        if (this instanceof MoneyMarket && this.balance < MINIMUM_MM_AMOUNT) {
             MoneyMarket account = (MoneyMarket) this;
             account.loyal = 0;
         }

@@ -47,8 +47,6 @@ public class BankTellerController {
      */
     @FXML
     protected void onOpenButtonClick(ActionEvent event) {
-        String first = ocFirstName.getText(), last = ocLastName.getText(), dob = ocDOB.getText();
-
         if(ocFirstName.getText().isBlank() || ocLastName.getText().isBlank() || ocDOB.getText().isBlank()
                 || ocAmount.getText().isBlank()){
             messageArea.appendText("Missing data for opening an account.\n");
@@ -59,23 +57,28 @@ public class BankTellerController {
             return;
         }
 
-        RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
-        String accountType = selectedRadioButton.getText();
-
         int codes;
-        codes = setCodes(accountType);
+        codes = setCodes(getAccountType());
         if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
         double balanceDouble = checkValidBalance();
         if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
-        Date birth = new Date(dob);
-        Profile newProfile = new Profile(first, last, birth);
-        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        Profile newProfile = new Profile(ocFirstName.getText(), ocLastName.getText(), new Date(ocDOB.getText()));
+        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, getAccountType());
         if (openReturnErrorStatements(newAccount, bankDatabase)){
             return;
         }
         openAccountLastStep(newAccount);
+    }
+
+    /**
+     Returns the account type based on the selected radio button.
+     @return the String of the radio button selected.
+     */
+    private String getAccountType(){
+        RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
+        return selectedRadioButton.getText();
     }
 
     /**
@@ -141,8 +144,6 @@ public class BankTellerController {
      */
     @FXML
     protected void onCloseButtonClick(ActionEvent event) {
-        String first = ocFirstName.getText(), last = ocLastName.getText(), dob = ocDOB.getText();
-
         if(ocFirstName.getText().isBlank() || ocLastName.getText().isBlank() || ocDOB.getText().isBlank()){
             messageArea.appendText("Missing data for closing an account.\n");
             return;
@@ -155,13 +156,8 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = CODE_FILLER_VALUE;
-
-        double balanceDouble = ZERO_BALANCE;
-
-        Date birth = new Date(dob);
-        Profile newProfile = new Profile(first, last, birth);
-        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        Profile newProfile = new Profile(ocFirstName.getText(), ocLastName.getText(), new Date(ocDOB.getText()));
+        Account newAccount = createNewAccount(newProfile, ZERO_BALANCE, CODE_FILLER_VALUE, accountType);
 
         closeAccountLastStep(newAccount);
     }
@@ -172,8 +168,6 @@ public class BankTellerController {
      */
     @FXML
     protected void onDepositButtonClick(ActionEvent event) {
-        String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
-
         if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()
                 || ocDOB.getText().isBlank()){
             messageArea.appendText("Missing account data.\n");
@@ -184,11 +178,6 @@ public class BankTellerController {
             return;
         }
 
-        RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
-        String accountType = selectedRadioButton.getText();
-
-        int codes = CODE_FILLER_VALUE;
-
         double balanceDouble = checkValidBalance();
         if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
@@ -197,10 +186,8 @@ public class BankTellerController {
             return;
         }
 
-        Date birth = new Date(dob);
-        Profile newProfile = new Profile(first, last, birth);
-
-        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        Profile newProfile = new Profile(ocFirstName.getText(), ocLastName.getText(), new Date(ocDOB.getText()));
+        Account newAccount = createNewAccount(newProfile, balanceDouble, CODE_FILLER_VALUE, getAccountType());
         depositBalanceLastStep(newAccount);
     }
 
@@ -210,8 +197,6 @@ public class BankTellerController {
      */
     @FXML
     protected void onWithdrawButtonClick(ActionEvent event) {
-        String first = dwFirstName.getText(), last = dwLastName.getText(), dob = dwDOB.getText();
-
         if(dwFirstName.getText().isBlank() || dwLastName.getText().isBlank() || dwDOB.getText().isBlank()
                 || dwAmount.getText().isBlank()){
             messageArea.appendText("Missing account data.\n");
@@ -222,11 +207,6 @@ public class BankTellerController {
             return;
         }
 
-        RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
-        String accountType = selectedRadioButton.getText();
-
-        int codes = CODE_FILLER_VALUE;
-
         double balanceDouble = checkValidBalance();
         if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
@@ -235,10 +215,8 @@ public class BankTellerController {
             return;
         }
 
-        Date birth = new Date(dob);
-        Profile newProfile = new Profile(first, last, birth);
-
-        Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
+        Profile newProfile = new Profile(ocFirstName.getText(), ocLastName.getText(), new Date(ocDOB.getText()));
+        Account newAccount = createNewAccount(newProfile, balanceDouble, CODE_FILLER_VALUE, getAccountType());
         withdrawBalanceLastStep(newAccount);
     }
 
