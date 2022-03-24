@@ -21,6 +21,8 @@ public class BankTellerController {
     private static final int CODE_FILLER_VALUE = -10;
     private static final int MIN_MM_BALANCE = 2500;
     private static final int INDEX_OUT_OF_BOUNDS = -1;
+    private static final int BALANCE_FILLER_VALUE = -10;
+
 
     @FXML
     private RadioButton newBrunswick, newark, camden;
@@ -64,13 +66,8 @@ public class BankTellerController {
         codes = setCodes(accountType);
         if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
-        double balanceDouble;
-        try {
-            balanceDouble = Double.parseDouble(ocAmount.getText());
-        } catch (RuntimeException e){
-            messageArea.appendText("Not a valid amount.\n");
-            return;
-        }
+        double balanceDouble = checkValidBalance();
+        if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
         Date birth = new Date(dob);
         Profile newProfile = new Profile(first, last, birth);
@@ -78,7 +75,7 @@ public class BankTellerController {
         if (openReturnErrorStatements(newAccount, bankDatabase)){
             return;
         }
-        openAccountLastStep(bankDatabase, newAccount);
+        openAccountLastStep(newAccount);
     }
 
     /**
@@ -166,13 +163,7 @@ public class BankTellerController {
         Profile newProfile = new Profile(first, last, birth);
         Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
 
-        Account closeAcc = bankDatabase.findByProfileType(newAccount);
-        if (closeAcc.closed) {
-            messageArea.appendText("Account closed already.\n");
-        } else {
-            bankDatabase.close(closeAcc);
-            messageArea.appendText("Account closed.\n");
-        }
+        closeAccountLastStep(newAccount);
     }
 
     /**
@@ -198,13 +189,8 @@ public class BankTellerController {
 
         int codes = CODE_FILLER_VALUE;
 
-        double balanceDouble;
-        try {
-            balanceDouble = Double.parseDouble(dwAmount.getText());
-        } catch (RuntimeException e){
-            messageArea.appendText("Not a valid amount.\n");
-            return;
-        }
+        double balanceDouble = checkValidBalance();
+        if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
         if (balanceDouble <= ZERO_BALANCE){
             messageArea.appendText("Deposit - amount cannot be 0 or negative.\n");
@@ -215,7 +201,7 @@ public class BankTellerController {
         Profile newProfile = new Profile(first, last, birth);
 
         Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
-        depositBalanceLastStep(bankDatabase, newAccount);
+        depositBalanceLastStep(newAccount);
     }
 
     /**
@@ -241,13 +227,8 @@ public class BankTellerController {
 
         int codes = CODE_FILLER_VALUE;
 
-        double balanceDouble;
-        try {
-            balanceDouble = Double.parseDouble(dwAmount.getText());
-        } catch (RuntimeException e){
-            messageArea.appendText("Not a valid amount.\n");
-            return;
-        }
+        double balanceDouble = checkValidBalance();
+        if(balanceDouble == BALANCE_FILLER_VALUE) return;
 
         if (balanceDouble <= ZERO_BALANCE){
             messageArea.appendText("Withdraw - amount cannot be 0 or negative.\n");
@@ -258,9 +239,8 @@ public class BankTellerController {
         Profile newProfile = new Profile(first, last, birth);
 
         Account newAccount = createNewAccount(newProfile, balanceDouble, codes, accountType);
-        withdrawBalanceLastStep(bankDatabase, newAccount);
+        withdrawBalanceLastStep(newAccount);
     }
-
 
     /**
      Prints the accounts in the database in their current order.
@@ -349,11 +329,25 @@ public class BankTellerController {
     }
 
     /**
+     Checks if the string amount field can be converted to a valid Double value, and displays error message if not
+     @return balanceDouble the Double value of the balance.
+     */
+    public double checkValidBalance(){
+        double balanceDouble = BALANCE_FILLER_VALUE;
+        try {
+            balanceDouble = Double.parseDouble(ocAmount.getText());
+        } catch (RuntimeException e){
+            messageArea.appendText("Not a valid amount.\n");
+            return balanceDouble;
+        }
+        return balanceDouble;
+    }
+
+    /**
      Performs the last step of opening an account by opening/reopening the account and displaying relevant messages.
-     @param bankDatabase the database for which an account is being opened.
      @param newAccount the account being opened.
      */
-    public void openAccountLastStep(AccountDatabase bankDatabase, Account newAccount){
+    public void openAccountLastStep(Account newAccount){
         int index = bankDatabase.findClosedAccount(newAccount);
         if (index == INDEX_OUT_OF_BOUNDS){
             bankDatabase.open(newAccount);
@@ -365,12 +359,29 @@ public class BankTellerController {
     }
 
     /**
+     Performs the last step of closing an account or determining that the
+     account does not exist in the database and displaying relevant messages.
+     @param newAccount the account being closed.
+     */
+    public void closeAccountLastStep(Account newAccount){
+        Account closeAcc = bankDatabase.findByProfileType(newAccount);
+        if (closeAcc == null){
+            messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
+                    + " is not in the database. Cannot close account.\n");
+        } else if(closeAcc.closed) {
+            messageArea.appendText("Account closed already.\n");
+        } else {
+            bankDatabase.close(closeAcc);
+            messageArea.appendText("Account closed.\n");
+        }
+    }
+
+    /**
      Performs the last step of making a deposit to an account or determining that the
      account does not exist in the database and displaying relevant messages.
-     @param bankDatabase the database holding the account to which a deposit is being made.
      @param newAccount the account being deposited to.
      */
-    public void depositBalanceLastStep(AccountDatabase bankDatabase, Account newAccount){
+    public void depositBalanceLastStep(Account newAccount){
         Account depositAccount = bankDatabase.findByProfileType(newAccount);
         if (depositAccount == null){
             messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()
@@ -385,10 +396,9 @@ public class BankTellerController {
     /**
      Performs the last step of making a withdrawal from an account if there is sufficient funds
      or determining that the account does not exist in the database and displaying relevant messages.
-     @param bankDatabase the database holding the account from which a withdrawal is being made.
      @param newAccount the account being deposited to.
      */
-    public void withdrawBalanceLastStep(AccountDatabase bankDatabase, Account newAccount){
+    public void withdrawBalanceLastStep(Account newAccount){
         Account withdrawAccount = bankDatabase.findByProfileType(newAccount);
         if(withdrawAccount == null){
             messageArea.appendText(newAccount.holder.toString() + " " + newAccount.getType()

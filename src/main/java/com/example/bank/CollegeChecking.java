@@ -83,11 +83,4 @@ public class CollegeChecking extends Checking{
         return returnString;
     }
 
-    /**
-     Returns an account's college code.
-     @return int the college code.
-     */
-    public int getCollegeCode() {
-        return collegeCode;
-    }
 }

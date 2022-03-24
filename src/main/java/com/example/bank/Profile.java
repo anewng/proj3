@@ -22,22 +22,6 @@ public class Profile {
     }
 
     /**
-     Gets the first name.
-     @return fname the first name of the Profile.
-     */
-    public String getFname(){
-        return fname;
-    }
-
-    /**
-     Gets the last name.
-     @return lname the last name of the Profile.
-     */
-    public String getLname(){
-        return lname;
-    }
-
-    /**
      Gets the date of birth.
      @return dob is the dob of the Profile.
      */
