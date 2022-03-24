@@ -44,7 +44,7 @@ public class Date implements Comparable<Date> {
     public static final int SHORT_DATE_YEAR_END_INDEX = 8;
     public static final int MIN_YEAR = 1900;
     public static final int MAX_YEAR = 2022;
-    public static final int MIN_DAY = 0;
+    public static final int MIN_DAY = 1;
     public static final int MIN_MONTH = 0;
     public static final int MAX_MONTH = 13;
     public static final int JANUARY = 1;
