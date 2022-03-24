@@ -16,6 +16,11 @@ public class BankTellerController {
     private static final int LOYAL = 1;
     private static final int CODES_NOT_APPLICABLE = -2;
     private static final int CODES_APPLICABLE_AND_ERROR = -1;
+    private static final int ZERO_BALANCE = 0;
+    private static final int ZERO_ACCOUNTS = 0;
+    private static final int FILLER_CODE_VALUE = -10;
+    private static final int MIN_MM_BALANCE = 2500;
+    private static final int INDEX_OUT_OF_BOUNDS = -1;
 
     @FXML
     private RadioButton newBrunswick, newark, camden;
@@ -55,11 +60,11 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = -10;
+        int codes;
         codes = setCodes(accountType);
         if(codes == CODES_APPLICABLE_AND_ERROR) return;
 
-        double balanceDouble = 0;
+        double balanceDouble;
         try {
             balanceDouble = Double.parseDouble(ocAmount.getText());
         } catch (RuntimeException e){
@@ -83,13 +88,9 @@ public class BankTellerController {
      @return true if there is an error, else return false.
      */
     public boolean openReturnErrorStatements(Account newAccount, AccountDatabase bankDatabase) {
-        int campusCode = -1;
-        if (newAccount.getType().equals("College Checking")) {
-            campusCode = ((CollegeChecking) newAccount).collegeCode;
-        }
         if (!newAccount.holder.getDob().isValid() || newAccount.holder.getDob().isFutureDate() ) {
             messageArea.appendText("Date of birth invalid.\n");
-        } else if (newAccount.balance <= 0) {
+        } else if (newAccount.balance <= ZERO_BALANCE) {
             messageArea.appendText("Initial deposit cannot be 0 or negative.\n");
         } else if (newAccount.getType().equals("Checking") && bankDatabase.findCCProfile(newAccount)) {
             messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
@@ -97,7 +98,7 @@ public class BankTellerController {
             messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
         } else if (bankDatabase.isInDatabase(newAccount)) {
             messageArea.appendText(newAccount.holder.toString() + " same account(type) is in the database.\n");
-        } else if (newAccount.getType().equals("Money Market") && newAccount.balance < 2500) {
+        } else if (newAccount.getType().equals("Money Market") && newAccount.balance < MIN_MM_BALANCE) {
             messageArea.appendText("Minimum of $2500 to open a MoneyMarket account.\n");
         } else {
             return false;
@@ -113,10 +114,6 @@ public class BankTellerController {
      account is loyal Savings account and returns UNLOYAL if account is not loyal Savings account.
      */
     protected int setCodes(String accountType){
-        if(!accountType.equals("College Checking") && !accountType.equals("Savings")){
-            return CODES_NOT_APPLICABLE;
-        }
-
         if(accountType.equals("College Checking") && campusType.getSelectedToggle() == null){
             messageArea.appendText("Missing data for opening an account.\n");
             return CODES_APPLICABLE_AND_ERROR;
@@ -138,7 +135,7 @@ public class BankTellerController {
             }
             return UNLOYAL;
         }
-        return -10;
+        return CODES_NOT_APPLICABLE;
     }
 
     /**
@@ -161,9 +158,9 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = -1;
+        int codes = FILLER_CODE_VALUE;
 
-        double balanceDouble = 0;
+        double balanceDouble = ZERO_BALANCE;
 
         Date birth = new Date(dob);
         Profile newProfile = new Profile(first, last, birth);
@@ -199,9 +196,9 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = -10;
+        int codes = FILLER_CODE_VALUE;
 
-        double balanceDouble = 0;
+        double balanceDouble;
         try {
             balanceDouble = Double.parseDouble(dwAmount.getText());
         } catch (RuntimeException e){
@@ -209,7 +206,7 @@ public class BankTellerController {
             return;
         }
 
-        if (balanceDouble <= 0){
+        if (balanceDouble <= ZERO_BALANCE){
             messageArea.appendText("Deposit - amount cannot be 0 or negative.\n");
             return;
         }
@@ -242,9 +239,9 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = -10;
+        int codes = FILLER_CODE_VALUE;
 
-        double balanceDouble = 0;
+        double balanceDouble;
         try {
             balanceDouble = Double.parseDouble(dwAmount.getText());
         } catch (RuntimeException e){
@@ -252,7 +249,7 @@ public class BankTellerController {
             return;
         }
 
-        if (balanceDouble <= 0){
+        if (balanceDouble <= ZERO_BALANCE){
             messageArea.appendText("Withdraw - amount cannot be 0 or negative.\n");
             return;
         }
@@ -271,7 +268,7 @@ public class BankTellerController {
      */
     @FXML
     protected void onPrintAllAccountsButtonClick(ActionEvent event) {
-        if (bankDatabase.getNumAcct() == 0){
+        if (bankDatabase.getNumAcct() == ZERO_ACCOUNTS){
             messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts in the database*\n");
@@ -286,7 +283,7 @@ public class BankTellerController {
      */
     @FXML
     protected void onPrintAllAccountsByTypeButtonClick(ActionEvent event) {
-        if (bankDatabase.getNumAcct() == 0){
+        if (bankDatabase.getNumAcct() == ZERO_ACCOUNTS){
             messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts by account type.\n");
@@ -301,7 +298,7 @@ public class BankTellerController {
      */
     @FXML
     protected void onCalculateInterestsAndFeesButtonClick(ActionEvent event) {
-        if (bankDatabase.getNumAcct() == 0){
+        if (bankDatabase.getNumAcct() == ZERO_ACCOUNTS){
             messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts with fee and monthly interest");
@@ -317,7 +314,7 @@ public class BankTellerController {
     @FXML
     protected void onApplyInterestsAndFeesButtonClick(ActionEvent event) {
         bankDatabase.updateBalance();
-        if (bankDatabase.getNumAcct() == 0){
+        if (bankDatabase.getNumAcct() == ZERO_ACCOUNTS){
             messageArea.appendText("Account Database is empty!\n");
         } else {
             messageArea.appendText("\n*list of accounts with updated balance");
@@ -358,7 +355,7 @@ public class BankTellerController {
      */
     public void openAccountLastStep(AccountDatabase bankDatabase, Account newAccount){
         int index = bankDatabase.findClosedAccount(newAccount);
-        if (index == -1){
+        if (index == INDEX_OUT_OF_BOUNDS){
             bankDatabase.open(newAccount);
             messageArea.appendText("Account opened.\n");
         } else {

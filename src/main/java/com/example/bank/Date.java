@@ -14,30 +14,79 @@ public class Date implements Comparable<Date> {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
+    public static final int LONG_DATE_LENGTH = 10;
+    public static final int MEDIUM_DATE_LENGTH = 9;
+    public static final int SHORT_DATE_LENGTH = 8;
+    public static final int LONG_DATE_MONTH_START_INDEX = 0;
+    public static final int LONG_DATE_MONTH_END_INDEX = 2;
+    public static final int LONG_DATE_DAY_START_INDEX = 3;
+    public static final int LONG_DATE_DAY_END_INDEX = 5;
+    public static final int LONG_DATE_YEAR_START_INDEX = 6;
+    public static final int LONG_DATE_YEAR_END_INDEX = 10;
+    public static final int SLASH_INDEX = 1;
+    public static final int MEDIUM_DATE_MONTH_START_INDEX_CASE_1 = 0;
+    public static final int MEDIUM_DATE_MONTH_END_INDEX_CASE_1 = 1;
+    public static final int MEDIUM_DATE_DAY_START_INDEX_CASE_1 = 2;
+    public static final int MEDIUM_DATE_DAY_END_INDEX_CASE_1 = 4;
+    public static final int MEDIUM_DATE_YEAR_START_INDEX_CASE_1 = 5;
+    public static final int MEDIUM_DATE_YEAR_END_INDEX_CASE_1 = 9;
+    public static final int MEDIUM_DATE_MONTH_START_INDEX_CASE_2 = 0;
+    public static final int MEDIUM_DATE_MONTH_END_INDEX_CASE_2 = 2;
+    public static final int MEDIUM_DATE_DAY_START_INDEX_CASE_2 = 3;
+    public static final int MEDIUM_DATE_DAY_END_INDEX_CASE_2 = 4;
+    public static final int MEDIUM_DATE_YEAR_START_INDEX_CASE_2 = 5;
+    public static final int MEDIUM_DATE_YEAR_END_INDEX_CASE_2 = 9;
+    public static final int SHORT_DATE_MONTH_START_INDEX = 0;
+    public static final int SHORT_DATE_MONTH_END_INDEX = 1;
+    public static final int SHORT_DATE_DAY_START_INDEX = 2;
+    public static final int SHORT_DATE_DAY_END_INDEX = 3;
+    public static final int SHORT_DATE_YEAR_START_INDEX = 4;
+    public static final int SHORT_DATE_YEAR_END_INDEX = 8;
+    public static final int MIN_YEAR = 1900;
+    public static final int MAX_YEAR = 2022;
+    public static final int MIN_DAY = 0;
+    public static final int MIN_MONTH = 0;
+    public static final int MAX_MONTH = 13;
+    public static final int JANUARY = 1;
+    public static final int FEBRUARY = 2;
+    public static final int MARCH = 3;
+    public static final int APRIL = 4;
+    public static final int MAY = 5;
+    public static final int JUNE = 6;
+    public static final int JULY = 7;
+    public static final int AUGUST = 8;
+    public static final int SEPTEMBER = 9;
+    public static final int OCTOBER = 10;
+    public static final int NOVEMBER = 11;
+    public static final int DECEMBER = 12;
+    public static final int LONG_MONTH_MAX_DAYS = 31;
+    public static final int SHORT_MONTH_MAX_DAYS = 30;
+    public static final int LEAP_YEAR_MAX_DAYS = 30;
+    public static final int NON_LEAP_YEAR_MAX_DAYS = 29;
 
     /**
      Constructor takes mm/dd/yyyy and creates a Date object.
      @param date the date in String form of Date object you're creating.
      */
     public Date(String date) {
-        if (date.length() == 10) {
-            month = Integer.parseInt(date.substring(0, 2));
-            day = Integer.parseInt(date.substring(3, 5));
-            year = Integer.parseInt(date.substring(6, 10));
-        } else if (date.length() == 9) {
-            if (date.charAt(1) == '/') {
-                month = Integer.parseInt(date.substring(0, 1));
-                day = Integer.parseInt(date.substring(2, 4));
-                year = Integer.parseInt(date.substring(5, 9));
+        if (date.length() == LONG_DATE_LENGTH) {
+            month = Integer.parseInt(date.substring(LONG_DATE_MONTH_START_INDEX, LONG_DATE_MONTH_END_INDEX));
+            day = Integer.parseInt(date.substring(LONG_DATE_DAY_START_INDEX, LONG_DATE_DAY_END_INDEX));
+            year = Integer.parseInt(date.substring(LONG_DATE_YEAR_START_INDEX, LONG_DATE_YEAR_END_INDEX));
+        } else if (date.length() == MEDIUM_DATE_LENGTH) {
+            if (date.charAt(SLASH_INDEX) == '/') {
+                month = Integer.parseInt(date.substring(MEDIUM_DATE_MONTH_START_INDEX_CASE_1, MEDIUM_DATE_MONTH_END_INDEX_CASE_1));
+                day = Integer.parseInt(date.substring(MEDIUM_DATE_DAY_START_INDEX_CASE_1, MEDIUM_DATE_DAY_END_INDEX_CASE_1));
+                year = Integer.parseInt(date.substring(MEDIUM_DATE_YEAR_START_INDEX_CASE_1, MEDIUM_DATE_YEAR_END_INDEX_CASE_1));
             } else {
-                month = Integer.parseInt(date.substring(0, 2));
-                day = Integer.parseInt(date.substring(3, 4));
-                year = Integer.parseInt(date.substring(5, 9));
+                month = Integer.parseInt(date.substring(MEDIUM_DATE_MONTH_START_INDEX_CASE_2, MEDIUM_DATE_MONTH_END_INDEX_CASE_2));
+                day = Integer.parseInt(date.substring(MEDIUM_DATE_DAY_START_INDEX_CASE_2, MEDIUM_DATE_DAY_END_INDEX_CASE_2));
+                year = Integer.parseInt(date.substring(MEDIUM_DATE_YEAR_START_INDEX_CASE_2, MEDIUM_DATE_YEAR_END_INDEX_CASE_2));
             }
-        } else if (date.length() == 8) {
-            month = Integer.parseInt(date.substring(0, 1));
-            day = Integer.parseInt(date.substring(2, 3));
-            year = Integer.parseInt(date.substring(4, 8));
+        } else if (date.length() == SHORT_DATE_LENGTH) {
+            month = Integer.parseInt(date.substring(SHORT_DATE_MONTH_START_INDEX, SHORT_DATE_MONTH_END_INDEX));
+            day = Integer.parseInt(date.substring(SHORT_DATE_DAY_START_INDEX, SHORT_DATE_DAY_END_INDEX));
+            year = Integer.parseInt(date.substring(SHORT_DATE_YEAR_START_INDEX, SHORT_DATE_YEAR_END_INDEX));
         }
 
     }
@@ -57,19 +106,19 @@ public class Date implements Comparable<Date> {
      @return true if the date is valid, false if not.
      */
     public boolean isValid() {
-        if (year < 1900 || year > 2022) return false;
-        if (day < 1) return false;
-        if (month <= 0 || month >= 13) return false;
-        if (((month == 1) || (month == 3) || (month == 5) || (month == 7)
-                || (month == 8) || (month == 10) || (month == 12))
-                && day > 31) {
+        if (year < MIN_YEAR || year > MAX_YEAR) return false;
+        if (day < MIN_DAY) return false;
+        if (month <= MIN_MONTH || month >= MAX_MONTH) return false;
+        if (((month == JANUARY) || (month == MARCH) || (month == MAY) || (month == JULY)
+                || (month == AUGUST) || (month == OCTOBER) || (month == DECEMBER))
+                && day > LONG_MONTH_MAX_DAYS) {
             return false;
-        } else if (((month == 4) || (month == 6) || (month == 9) || (month == 11))
-                && day > 30) {
+        } else if (((month == APRIL) || (month == JUNE) || (month == SEPTEMBER) || (month == NOVEMBER))
+                && day > SHORT_MONTH_MAX_DAYS) {
             return false;
-        } else if (month == 2 && isLeapYear() && day >= 30) {
+        } else if (month == FEBRUARY && isLeapYear() && day >= LEAP_YEAR_MAX_DAYS) {
             return false;
-        } else if (month == 2 && !isLeapYear() && day >= 29) {
+        } else if (month == FEBRUARY && !isLeapYear() && day >= NON_LEAP_YEAR_MAX_DAYS) {
             return false;
         }
         return true;

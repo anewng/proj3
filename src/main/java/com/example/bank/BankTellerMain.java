@@ -13,6 +13,8 @@ import java.io.IOException;
  */
 public class BankTellerMain extends Application {
 
+    private static final int WIDTH_AND_HEIGHT = 600;
+
     /**
      The start method loads the fxml file for the GUI and creates the stage to be displayed.
      @param stage the stage being launched.
@@ -21,7 +23,7 @@ public class BankTellerMain extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BankTellerMain.class.getResource("BankTellerView.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH_AND_HEIGHT, WIDTH_AND_HEIGHT);
         stage.setTitle("Bank");
         stage.setScene(scene);
         stage.show();
