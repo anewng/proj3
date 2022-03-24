@@ -187,7 +187,6 @@ public class AccountDatabase {
         }
         accounts[index].closed = true;
         accounts[index].balance = 0;
-        Account acc = accounts[index];
         if (accounts[index] instanceof Savings) {
             ((Savings) accounts[index]).loyal = 0;
         }
