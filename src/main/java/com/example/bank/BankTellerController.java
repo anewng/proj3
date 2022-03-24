@@ -18,7 +18,7 @@ public class BankTellerController {
     private static final int CODES_APPLICABLE_AND_ERROR = -1;
     private static final int ZERO_BALANCE = 0;
     private static final int ZERO_ACCOUNTS = 0;
-    private static final int FILLER_CODE_VALUE = -10;
+    private static final int CODE_FILLER_VALUE = -10;
     private static final int MIN_MM_BALANCE = 2500;
     private static final int INDEX_OUT_OF_BOUNDS = -1;
 
@@ -158,7 +158,7 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = FILLER_CODE_VALUE;
+        int codes = CODE_FILLER_VALUE;
 
         double balanceDouble = ZERO_BALANCE;
 
@@ -196,7 +196,7 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = FILLER_CODE_VALUE;
+        int codes = CODE_FILLER_VALUE;
 
         double balanceDouble;
         try {
@@ -239,7 +239,7 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctTypeDW.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = FILLER_CODE_VALUE;
+        int codes = CODE_FILLER_VALUE;
 
         double balanceDouble;
         try {
