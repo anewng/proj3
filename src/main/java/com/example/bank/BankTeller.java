@@ -354,7 +354,7 @@ public class BankTeller {
             bankDatabase.open(newAccount);
             System.out.println("Account opened.");
         } else {
-            bankDatabase.reopen(newAccount, index);
+            bankDatabase.reopen(newAccount);
             System.out.println("Account reopened.");
         }
     }

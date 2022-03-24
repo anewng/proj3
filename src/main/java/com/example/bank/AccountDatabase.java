@@ -160,9 +160,14 @@ public class AccountDatabase {
     /**
      Reopens an account in the database.
      @param account the account being reopened.
-     @param index the index of the account in database.
      */
-    public void reopen(Account account, int index){
+    public void reopen(Account account){
+        int index = -1;
+        for (int i = 0; i < numAcct; i++){
+            if (accounts[i].equalsProfileType(account)){
+                index = i;
+            }
+        }
         accounts[index].balance = account.balance;
         accounts[index].closed = false;
         if(accounts[index].getType().compareTo("Savings") == 0){

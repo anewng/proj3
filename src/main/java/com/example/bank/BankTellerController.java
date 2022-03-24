@@ -359,7 +359,7 @@ public class BankTellerController {
             bankDatabase.open(newAccount);
             messageArea.appendText("Account opened.\n");
         } else {
-            bankDatabase.reopen(newAccount, index);
+            bankDatabase.reopen(newAccount);
             messageArea.appendText("Account reopened.\n");
         }
     }
