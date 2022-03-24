@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ The BankTellerController class dictates the function of the GUI.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class BankTellerController {
     private static final int NEW_BRUNSWICK = 0;
     private static final int NEWARK = 1;
@@ -31,7 +35,7 @@ public class BankTellerController {
     AccountDatabase bankDatabase = new AccountDatabase();
 
     /**
-     Opens an account by adding it to the database.
+     Opens an account in the database.
      @param event the method is executed when the user clicks the Open button on the GUI.
      */
     @FXML
@@ -101,6 +105,13 @@ public class BankTellerController {
         return true;
     }
 
+    /**
+     Determines code usage based on account.
+     @param accountType the type of account.
+     @return CODES_NOT_APPLICABLE if account is not College Checking or Savings, returns CODES_APPLICABLE_AND_ERROR
+     if account is College Checking or Savings, but missing necessary campus code/loyalty data, returns LOYAL if
+     account is loyal Savings account and returns UNLOYAL if account is not loyal Savings account.
+     */
     protected int setCodes(String accountType){
         if(!accountType.equals("College Checking") && !accountType.equals("Savings")){
             return CODES_NOT_APPLICABLE;
@@ -150,9 +161,7 @@ public class BankTellerController {
         RadioButton selectedRadioButton = (RadioButton) acctType.getSelectedToggle();
         String accountType = selectedRadioButton.getText();
 
-        int codes = -10;
-        //codes = setCodes(accountType);
-        //if(codes == CODES_APPLICABLE_AND_ERROR) return;
+        int codes = -1;
 
         double balanceDouble = 0;
 
@@ -258,7 +267,7 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database in their current order.
-     @param
+     @param event the method is executed when the user clicks the Print All Accounts button on the GUI.
      */
     @FXML
     protected void onPrintAllAccountsButtonClick(ActionEvent event) {
@@ -273,6 +282,7 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database by order of type.
+     @param event the method is executed when the user clicks the Print All Accounts By Types button on the GUI.
      */
     @FXML
     protected void onPrintAllAccountsByTypeButtonClick(ActionEvent event) {
@@ -287,6 +297,7 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database in their current order with their calculated fees/interests.
+     @param event the method is executed when the user clicks the Calculate Interest and Fees button on the GUI.
      */
     @FXML
     protected void onCalculateInterestsAndFeesButtonClick(ActionEvent event) {
@@ -301,6 +312,7 @@ public class BankTellerController {
 
     /**
      Prints the accounts in the database in their current order with updated balances based on fees/interests.
+     @param event the method is executed when the user clicks the Apply Interests and Fees button on the GUI.
      */
     @FXML
     protected void onApplyInterestsAndFeesButtonClick(ActionEvent event) {
@@ -395,6 +407,10 @@ public class BankTellerController {
         }
     }
 
+    /**
+     Disables/de-selects loyalty checkbox when College Checking account is selected.
+     @param event the method is executed when the user clicks the College Checking button on the GUI.
+     */
     @FXML
     protected void onCollegeCheckingButtonClick(ActionEvent event) {
         newBrunswick.setDisable(false);
@@ -404,6 +420,10 @@ public class BankTellerController {
         loyal.setSelected(false);
     }
 
+    /**
+     Disables/de-selects campus selection and loyalty when Checking account is selected.
+     @param event the method is executed when the user clicks the Checking button on the GUI.
+     */
     @FXML
     protected void onCheckingButtonClick(ActionEvent event) {
         newBrunswick.setDisable(true);
@@ -416,6 +436,10 @@ public class BankTellerController {
         loyal.setSelected(false);
     }
 
+    /**
+     Disables/de-selects campus selection when Money Market account is selected.
+     @param event the method is executed when the user clicks the Money Market button on the GUI.
+     */
     @FXML
     protected void onMoneyMarketButtonClick(ActionEvent event) {
         newBrunswick.setDisable(true);
@@ -427,6 +451,10 @@ public class BankTellerController {
         camden.setSelected(false);
     }
 
+    /**
+     Disables/de-selects campus selection when Money Market account is selected.
+     @param event the method is executed when the user clicks the Money Market button on the GUI.
+     */
     @FXML
     protected void onSavingsButtonClick(ActionEvent event) {
         newBrunswick.setDisable(true);

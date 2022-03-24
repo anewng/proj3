@@ -1,16 +1,22 @@
 package com.example.bank;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 
+/**
+ The BankTellerMain class runs the project by implementing the start method.
+ It acts as a driver for the program.
+ @author Annie Wang, Jasmine Flanders
+ */
 public class BankTellerMain extends Application {
+
+    /**
+     The start method loads the fxml file for the GUI and creates the stage to be displayed.
+     @param stage the stage being launched.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BankTellerMain.class.getResource("BankTellerView.fxml"));
@@ -21,6 +27,10 @@ public class BankTellerMain extends Application {
         stage.show();
     }
 
+    /**
+     Main method for BankTellerMain.
+     Launches the program.
+     */
     public static void main(String[] args) {
         launch();
     }
